@@ -5,41 +5,59 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./views/home";
 import { Demo } from "./views/demo";
 import { Single } from "./views/single";
+import {
+  PeopleDetail,
+  PlanetsDetails,
+  StarWars,
+  StarWarsDetail,
+} from "./views/starwars";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { UserProvider } from "./store/userContext";
 
 //create your first component
 const Layout = () => {
-	//the basename is used when your project is published in a subdirectory and not in the root of the domain
-	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-	const basename = process.env.BASENAME || "";
+  //the basename is used when your project is published in a subdirectory and not in the root of the domain
+  // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+  const basename = process.env.BASENAME || "";
 
-	return (
-		<div>
-			<BrowserRouter basename={basename}>
-				<ScrollToTop>
-					<Navbar />
-					<Switch>
-						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route exact path="/demo">
-							<Demo />
-						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
-						</Route>
-						<Route>
-							<h1>Not found!</h1>
-						</Route>
-					</Switch>
-					<Footer />
-				</ScrollToTop>
-			</BrowserRouter>
-		</div>
-	);
+  return (
+    <UserProvider>
+      <div>
+        <BrowserRouter basename={basename}>
+          <ScrollToTop>
+            <Navbar />
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/demo">
+                <Demo />
+              </Route>
+              <Route exact path="/single/:theid">
+                <Single />
+              </Route>
+              <Route exact path="/starwars">
+                <StarWars />
+              </Route>
+              <Route exact path="/people/:id">
+                <PeopleDetail />
+              </Route>
+              <Route exact path="/planets/:id">
+                <PlanetsDetails />
+              </Route>
+              <Route>
+                <h1>Not found!</h1>
+              </Route>
+            </Switch>
+            <Footer />
+          </ScrollToTop>
+        </BrowserRouter>
+      </div>
+    </UserProvider>
+  );
 };
 
 export default injectContext(Layout);
